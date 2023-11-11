@@ -4,6 +4,8 @@ const express = require('express');
 const errorHandler = require('./handlers/500');;
 const notFound = require('./handlers/404');
 const authRoutes = require('./routes/auth');
+const usersRoutes = require('./routes/users');
+const secretRoutes = require('./routes/secret');
 
 require('dotenv').config();
 const PORT = process.env.PORT;
@@ -18,6 +20,8 @@ app.get('/', (req, res, next) => {
 });
 
 app.use(authRoutes);
+app.use(usersRoutes);
+app.use(secretRoutes);
 
 app.use('*', notFound);
 app.use(errorHandler);
