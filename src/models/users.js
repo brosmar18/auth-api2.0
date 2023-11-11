@@ -14,12 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     token: {
       type: DataTypes.VIRTUAL,
       get() {
-        return jwt.sign({ username: this.username }, SECRET);
+        return jwt.sign({ username: this.username }, SECRET, {expiresIn: 1000* 60 * 60 * 15});
       },
-      set(tokenObj) {
-        let token = jwt.sign(tokenObj, SECRET);
-        return token;
-      }
+      set() {
+        return jwt.sign({ username: this.username }, SECRET, {expiresIn: 1000* 60 * 60 * 15});
+      },
     },
     capabilities: {
       type: DataTypes.VIRTUAL,
@@ -43,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
 
-  User.authenticateToken = async (token) => {
+  User.authenticateBearer = async (token) => {
     try {
       const parsedToken = jwt.verify(token, SECRET);
       const user = await User.findOne({where: { username: parsedToken.username } });

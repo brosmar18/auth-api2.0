@@ -1,24 +1,28 @@
-'use strict';
-
-const { users } = require('../../auth-server/src/auth/models')
+// Import the sequelizeDatabase
+const { sequelizeDatabase } = require('../models');
 
 module.exports = async (req, res, next) => {
+  if (!req.headers.authorization) {
+    next("Not Authorized, no token present!");
+  } else {
+    try {
+      let authType = req.headers.authorization.split(' ')[0];
+      if (authType === 'Bearer') {
+        let token = req.headers.authorization.split(' ')[1];
+        console.log("Token from bearer middleware: ", token);
 
-  try {
-
-    if (!req.headers.authorization) { _authError() }
-
-    const token = req.headers.authorization.split(' ').pop();
-    const validUser = await users.authenticateToken(token);
-    req.user = validUser;
-    req.token = validUser.token;
-    next();
-
-  } catch (e) {
-    _authError();
+        // Access the User model directly from sequelizeDatabase
+        let validUser = await sequelizeDatabase.models.Users.authenticateBearer(token);
+        if (validUser) {
+          req.user = validUser;
+          next();
+        } else {
+          next("Send a token in a bearer with auth string");
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      next(new Error("Error processing the token"));
+    }
   }
-
-  function _authError() {
-    next('Invalid Login');
-  }
-}
+};

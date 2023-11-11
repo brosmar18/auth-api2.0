@@ -3,7 +3,7 @@
 const express = require('express');
 const errorHandler = require('./handlers/500');;
 const notFound = require('./handlers/404');
-// const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/auth');
 
 require('dotenv').config();
 const PORT = process.env.PORT;
@@ -17,7 +17,7 @@ app.get('/', (req, res, next) => {
   res.status(200).send("Hello World!");
 });
 
-// app.use(authRoutes);
+app.use(authRoutes);
 
 app.use('*', notFound);
 app.use(errorHandler);

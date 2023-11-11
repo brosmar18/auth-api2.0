@@ -1,6 +1,6 @@
 const base64 = require('base-64');
 const bcrypt = require('bcrypt');
-const { userModel } = require('../../models');
+const { usersCollection } = require('../models');
 
 const basicAuth = async (req, res, next) => {
     let { authorization } = req.headers;
@@ -16,7 +16,7 @@ const basicAuth = async (req, res, next) => {
 
     console.log(`Authenticating user: ${username}`); // Debugging log
 
-    let user = await userModel.findOne({ where: { username } });
+    let user = await usersCollection.findOne({ where: { username } });
 
     if (user) {
         let validUser = await bcrypt.compare(password, user.password);
