@@ -37,4 +37,11 @@ describe('Collection class methods', () => {
         const result = await collectionInstance.update(1, { name: 'Updated'});
         expect(result.name).toBe('Updated');
     });
-})
+
+    test('Should throw an error if update fails to find the record', async () => {
+        modelMock.findByPk = jest.fn().mockReturnValueOnce(null);
+        const result = await collectionInstance.update(2, {});
+        expect(result).toBeInstanceOf(Error);
+        expect(result.message).toBe('Record not found');
+    });
+});
