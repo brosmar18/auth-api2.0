@@ -45,16 +45,22 @@ describe('Collection class methods', () => {
         expect(result.message).toBe('Record not found');
     });
 
-    it('should delete a record by id', async () => {
+    test('should delete a record by id', async () => {
         modelMock.destroy = jest.fn().mockReturnValueOnce(1);
         const result = await collectionInstance.delete(1);
         expect(result.message).toBe('Record deleted successfully');
     });
 
-    it('should throw an error if deletion fails', async () => {
+    test('should throw an error if deletion fails', async () => {
         modelMock.destroy = jest.fn().mockReturnValueOnce(0);
         const result = await collectionInstance.delete(2);
         expect(result).toBeInstanceOf(Error);
         expect(result.message).toBe('Record not found or not deleted');
+    });
+
+    test('should handle creation errors gracefully', async () => {
+        modelMock.create = jest.fn().mockRejectedValueOnce(new Error('Creation error'));
+        const result = await collectionInstance.create({ name: 'Fail' });
+        expect(result).toBeUndefined();
     });
 });
