@@ -25,4 +25,16 @@ describe('Collection class methods', () => {
         expect(result.id).toBe(1);
         expect(result.name).toBe('Example');
     });
+
+    test('Should read all records if no id is provided', async () => {
+        const results = await collectionInstance.read();
+        expect(Array.isArray(results)).toBe(true);
+    });
+
+    test('Should update a record by id', async () => {
+        modelMock.update = jest.fn().mockReturnValueOnce([1]);
+        modelMock.findByPk = jest.fn().mockReturnValueOnce(modelMock.build({ name: 'Updated '}));
+        const result = await collectionInstance.update(1, { name: 'Updated'});
+        expect(result.name).toBe('Updated');
+    });
 })
