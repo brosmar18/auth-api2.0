@@ -44,4 +44,10 @@ describe('Collection class methods', () => {
         expect(result).toBeInstanceOf(Error);
         expect(result.message).toBe('Record not found');
     });
+
+    it('should delete a record by id', async () => {
+        modelMock.destroy = jest.fn().mockReturnValueOnce(1);
+        const result = await collectionInstance.delete(1);
+        expect(result.message).toBe('Record deleted successfully');
+    });
 });
