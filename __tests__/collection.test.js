@@ -74,4 +74,10 @@ describe('Collection class methods', () => {
         const error = await collectionInstance.update(1, {});
         expect(error.message).toBe('Update error');
     });
+
+    test('Should handle delete errors gracefully', async () => {
+        modelMock.destroy = jest.fn().mockRejectedValueOnce(new Error('Delete error'));
+        const error = await collectionInstance.delete(1);
+        expect(error.message).toBe('Delete error');
+    });
 });
