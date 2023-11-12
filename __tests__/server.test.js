@@ -16,4 +16,12 @@ describe('API Server', () => {
 
         expect(response.status).toEqual(404);
     });
+
+    test('Handles server errors', async () => {
+        const response = await mockRequest.get('/error');
+
+        expect(response.status).toEqual(500);
+        expect(response.body.error).toEqual(500);
+        expect(response.body.message).toContain('Forced Error for Testing');
+    })
 });
