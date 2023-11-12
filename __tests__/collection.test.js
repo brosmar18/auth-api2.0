@@ -63,4 +63,9 @@ describe('Collection class methods', () => {
         const result = await collectionInstance.create({ name: 'Fail' });
         expect(result).toBeUndefined();
     });
+
+    test('Should handle read errors gracefully', async () => {
+        modelMock.findOne = jest.fn().mockRejectedValueOnce(new Error('Read error'));
+        await expect(collectionInstance.read(1)).rejects.toThrow('Read error');
+    });
 });
