@@ -6,6 +6,7 @@ const notFound = require('./handlers/404');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 const secretRoutes = require('./routes/secret');
+const coursesRoutes = require('./routes/courses');
 
 require('dotenv').config();
 const PORT = process.env.PORT;
@@ -27,6 +28,7 @@ app.get('/error', (req, res, next) => {
 app.use(authRoutes);
 app.use(usersRoutes);
 app.use(secretRoutes);
+app.use(coursesRoutes);
 
 app.use('*', notFound);
 app.use(errorHandler);

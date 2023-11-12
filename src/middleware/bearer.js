@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
         console.log("Token from bearer middleware: ", token);
 
         // Access the User model directly from sequelizeDatabase
-        let validUser = await sequelizeDatabase.models.Users.authenticateBearer(token);
+        let validUser = await sequelizeDatabase.models.User.authenticateBearer(token);
         if (validUser) {
           req.user = validUser;
           next();

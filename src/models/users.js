@@ -7,7 +7,7 @@ require('dotenv').config();
 const SECRET = process.env.SECRET || 'secretstring';
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('Users', {
+  const User = sequelize.define('User', {
     username: { type: DataTypes.STRING, required: true, unique: true },
     password: { type: DataTypes.STRING, required: true },
     role: { type: DataTypes.ENUM('user', 'writer', 'editor', 'admin'), required: true, defaultValue: 'user'},
@@ -56,6 +56,15 @@ module.exports = (sequelize, DataTypes) => {
       throw new Error(e.message)
     }
   };
+
+ 
+User.associate = (models) => {
+  User.hasMany(models.coursesModel, {
+    foreignKey: 'userId',
+    as: 'courses'
+  });
+};
+
 
   return User;
 }
