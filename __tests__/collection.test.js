@@ -19,4 +19,10 @@ describe('Collection class methods', () => {
         const result = await collectionInstance.create({ name: 'Example'});
         expect(result.name).toBe('Example');
     });
+
+    test('Should read a new record by id', async () => {
+        const result = await collectionInstance.read(1);
+        expect(result.id).toBe(1);
+        expect(result.name).toBe('Example');
+    });
 })
