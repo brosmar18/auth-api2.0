@@ -68,4 +68,10 @@ describe('Collection class methods', () => {
         modelMock.findOne = jest.fn().mockRejectedValueOnce(new Error('Read error'));
         await expect(collectionInstance.read(1)).rejects.toThrow('Read error');
     });
+
+    test('Should handle update errors gracefully', async () => {
+        modelMock.findByPk = jest.fn().mockRejectedValueOnce(new Error('Update error'));
+        const error = await collectionInstance.update(1, {});
+        expect(error.message).toBe('Update error');
+    });
 });
