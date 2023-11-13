@@ -5,13 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "lint": "eslint **/*.js",
+    "test": "NODE_ENV=test jest --verbose --coverage",
+    "test-watch": "NODE_ENV=test jest --watchAll --verbose --coverage",
     "db:config": "sequelize init:config",
-    "db:create": "sequelize db:create",
-    "test-watch": "NODE_ENV=test jest --verbose --coverage --watchAll",
-    "test": "NODE_ENV=test jest  --verbose --coverage"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "db:create": "sequelize db:create"
   },
   "keywords": [],
   "author": "",
