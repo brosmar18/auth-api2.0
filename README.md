@@ -9,7 +9,6 @@
 
     The second phase of the project focuses on developing a new set of API routes (Version 2) that are protected based on user roles and permissions, using Bearer Authentication and an Access Control List (ACL). This includes ensuring that only authenticated users with the appropriate permissions can access specific operations like create, update, or delete. The project also mandates code refinement, transitioning to modern async/await syntax, robust error handling, and thorough testing of both authentication routes and versioned API routes. The ultimate goal is to create a secure and efficient API server with clear, role-defined access to resources.
 
-
 ### Links and Resources
 
 - [GitHub Actions ci/cd](https://github.com/brosmar18/auth-api2.0/actions) 
